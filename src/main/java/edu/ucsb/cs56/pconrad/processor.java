@@ -75,11 +75,7 @@ class processor{
             content = alarm.toClass(doc.get("content")).toString();
         }
         // send to the web page
-        post("/join", (request, response) -> {
-            Map map = new HashMap();
-            // need to post the content
-            return new ModelAndView(map, "/joinresult.mustache")
-        }, new MustacheTemplateEngine());
+        post("/joinresult", (request, response) -> content);
     }
 
     static int getHerokuAssignedPort() {
