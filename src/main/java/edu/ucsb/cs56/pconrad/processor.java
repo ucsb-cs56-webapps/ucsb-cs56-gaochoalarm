@@ -23,6 +23,13 @@ import static spark.Spark.port;
 
 class processor{
 
+    public static void main(String[] args){
+        port(getHerokuAssignedPort());
+        get("/", (rq, rs) -> new ModelAndView(map, "home.mustache"), new MustacheTemplateEngine());
+        createAnAlarm();
+        findAnAlarm();
+    }
+
     public void createAnAlarm(){
         // Get time and purpose to generate key and json
         int key;
@@ -38,6 +45,8 @@ class processor{
             json = a.toJson();
             return new ModelAndView(map, "createresult.mustache");
         }, new MustacheTemplateEngine());
+        // send to the web page 
+        post("/createresult", (rq, rs) -> key);
 
         // Post to database
         String dbUser = System.getenv().get("MONGODB_USER");
@@ -70,5 +79,13 @@ class processor{
         }
         // send to the web page
         post("/joinresult", (request, response) -> content);
+    }
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 }
