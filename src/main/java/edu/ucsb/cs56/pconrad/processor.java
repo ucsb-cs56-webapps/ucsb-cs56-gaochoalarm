@@ -29,7 +29,7 @@ class processor{
     
     public static void main(String[] args){
         port(getHerokuAssignedPort());
-        get("/", (rq, rs) -> new ModelAndView(map, "home.mustache"), new MustacheTemplateEngine());
+        get("/", (rq, rs) -> new ModelAndView(new HashMap(), "home.mustache"), new MustacheTemplateEngine());
         createAnAlarm();
         findAnAlarm();
     }
@@ -75,7 +75,7 @@ class processor{
             return new ModelAndView(map, "joinresult.mustache");
         }, new MustacheTemplateEngine());
 
-        MongoCursor<Document> cursor = data.find({ key: {"$eq", key}});
+        MongoCursor<Document> cursor = data.find({ key : {"$eq", key} });
         String content = "not found";
         if (cursor.hasNext()) {
             Document doc = cursor.next();
