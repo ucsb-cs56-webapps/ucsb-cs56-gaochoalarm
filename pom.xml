@@ -23,8 +23,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <userDefinedMainClass>edu.ucsb.cs56.pconrad.processor</userDefinedMainClass>
-    <userDefinedHerokuApp>gauchoalarm</userDefinedHerokuApp>
+    <userDefinedMainClass>edu.ucsb.cs56.pconrad.SparkMustacheDemo02</userDefinedMainClass>
+    <userDefinedHerokuApp>TBD</userDefinedHerokuApp>
   </properties>
 
   <!-- what other software does our project depend on (third-party JARs, etc.) -->
