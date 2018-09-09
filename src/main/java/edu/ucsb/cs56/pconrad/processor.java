@@ -15,26 +15,24 @@ import com.mongodb.client.result.DeleteResult;
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
 
+import alarm;
+
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.port;
 
 class processor{
-
-    public static final String CLASSNAME = "processor";
-    public static final Logger log = Logger.getLogger(CLASSNAME);
-
     public static void main(String[] args){        
         port(getHerokuAssignedPort());
     }
 
-    private void createAnAlarm(){
+    public void createAnAlarm(){
         // Get time and purpose to generate key and json
         int key;
         String json;
         get("/create", (request, response) -> {
-            time = request.queryParams("time");
-            purpose = request.queryParams("purpose");
+            String time = request.queryParams("time");
+            String purpose = request.queryParams("purpose");
             Map map = new HashMap();
             map.put("time", time);
             map.put("purpose", purpose);
@@ -43,7 +41,6 @@ class processor{
             json = a.toJson();
             return new ModelAndView(map, "createresult.mustache");
         }, new MustacheTemplateEngine());
-        alarm a = new alarm(time, purpose);
 
         // Post to database
         String dbUser = System.getenv().get("MONGODB_USER");
@@ -56,10 +53,10 @@ class processor{
         MongoDatabase db = client.getDatabase(uri.getDatabase());
         MongoCollection<Document> data = db.getCollection("data");
 		data.insertOne(new Document("key", key)
-                            .append("content", json)
+                            .append("content", json));
     }
 
-    private void findAnAlarm(){
+    public void findAnAlarm(){
         int key;
         get("/join", (request, response)->{
             key = request.queryParams("key");
