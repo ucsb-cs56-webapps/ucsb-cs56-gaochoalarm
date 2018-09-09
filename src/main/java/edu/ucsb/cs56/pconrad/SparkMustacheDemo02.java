@@ -3,7 +3,7 @@ package edu.ucsb.cs56.pconrad;
 import static spark.Spark.port;
 
 import org.apache.log4j.Logger;
-
+import alarm;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class SparkMustacheDemo02 {
         get("/", (rq, rs) -> new ModelAndView(new HashMap(), "home.mustache"), new MustacheTemplateEngine());
 
         // Get time and purpose to generate key and json
-        int key;
+        int createKey;
         String json;
         get("/create", (request, response) -> {
             String time = request.queryParams("time");
@@ -41,12 +41,12 @@ public class SparkMustacheDemo02 {
             map.put("time", time);
             map.put("purpose", purpose);
             alarm a = new alarm(time, purpose);
-            key = a.hashCode();
+            createKey = a.hashCode();
             json = a.toJson();
             return new ModelAndView(map, "createresult.mustache");
         }, new MustacheTemplateEngine());
         // send to the web page 
-        post("/createresult", (rq, rs) -> key);
+        post("/createresult", (rq, rs) -> createKey);
 		
         // Post to database
         String dbUser = System.getenv().get("MONGODB_USER");
@@ -58,7 +58,7 @@ public class SparkMustacheDemo02 {
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
         MongoCollection<Document> data = db.getCollection("data");
-		data.insertOne(new Document("key", key)
+		data.insertOne(new Document("key", createKey)
                             .append("content", json));
 
         int key;
