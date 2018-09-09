@@ -23,6 +23,10 @@ import static spark.Spark.port;
 
 class processor{
 
+	public static final String CLASSNAME="processor";
+	
+    public static final Logger log = Logger.getLogger(CLASSNAME);
+    
     public static void main(String[] args){
         port(getHerokuAssignedPort());
         get("/", (rq, rs) -> new ModelAndView(map, "home.mustache"), new MustacheTemplateEngine());
