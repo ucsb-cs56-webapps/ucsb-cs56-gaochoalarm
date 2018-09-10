@@ -46,14 +46,14 @@ public class SparkMustacheDemo02 {
             return new ModelAndView(map, "createresult.mustache");
         }, new MustacheTemplateEngine());
         // send to the web page 
-        post("/createresult", (rq, rs) -> createKey);
+        post("/createresult", (request, response) -> createKey.toString());
 		
         // Post to database
         String dbUser = System.getenv().get("MONGODB_USER");
         String dbPassword = System.getenv().get("MONGODB_PASS");
-        String dbName  = System.getenv().get("MONGODB__NAME");
+        String dbName = System.getenv().get("MONGODB__NAME");
         String hostName = System.getenv().get("MONGODB_HOST");
-        String request   = "mongodb://" + dbUser + ":" + dbPassword + "@" + hostName + "/" + dbName;
+        String request = "mongodb://" + dbUser + ":" + dbPassword + "@" + hostName + "/" + dbName;
         MongoClientURI uri  = new MongoClientURI(request); 
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
@@ -62,10 +62,10 @@ public class SparkMustacheDemo02 {
                             .append("content", json));
 
         int key;
-        get("/join", (request, response)->{
+        get("/join", (request, response) -> {
             key = request.queryParams("key");
             Map map = new HashMap();
-            map.put("key", key)
+            map.put("key", key);
             return new ModelAndView(map, "joinresult.mustache");
         }, new MustacheTemplateEngine());
 
@@ -86,6 +86,5 @@ public class SparkMustacheDemo02 {
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
-
 	
 }
