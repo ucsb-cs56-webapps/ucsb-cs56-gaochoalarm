@@ -28,7 +28,7 @@ import static spark.Spark.post;
 
 public class SparkMustacheDemo02 {
 
-	public static final String CLASSNAME="SparkMustacheDemo02";
+	public static final String CLASSNAME = new Object() {}.getClass().getEnclosingClass().getName();;
 	
 	public static final Logger log = Logger.getLogger(CLASSNAME);
 
@@ -70,7 +70,7 @@ public class SparkMustacheDemo02 {
 
         int key;
         get("/join", (request, response) -> {
-            key = request.queryParams("key");
+            key = Integer.parseInt(request.queryParams("key"));
             Map map = new HashMap();
             map.put("key", key);
             return new ModelAndView(map, "joinresult.mustache");
