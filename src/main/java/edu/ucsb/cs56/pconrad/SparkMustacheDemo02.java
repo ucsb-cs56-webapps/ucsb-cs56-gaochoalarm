@@ -26,6 +26,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import com.google.gson.Gson;
+
 public class SparkMustacheDemo02 {
 
 	public static final String CLASSNAME="SparkMustacheDemo02";
