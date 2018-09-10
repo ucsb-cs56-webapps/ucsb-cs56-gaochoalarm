@@ -2,6 +2,19 @@ package edu.ucsb.cs56.pconrad;
 
 import static spark.Spark.port;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import com.mongodb.Block;
+import com.mongodb.client.MongoCursor;
+import static com.mongodb.client.model.Filters.*;
+import com.mongodb.client.result.DeleteResult;
+import static com.mongodb.client.model.Updates.*;
+import com.mongodb.client.result.UpdateResult;
+
 import org.apache.log4j.Logger;
 import alarm;
 
@@ -13,11 +26,6 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
-
-/**
- * Simple example of using Mustache Templates
- *
- */
 
 public class SparkMustacheDemo02 {
 
@@ -69,12 +77,8 @@ public class SparkMustacheDemo02 {
             return new ModelAndView(map, "joinresult.mustache");
         }, new MustacheTemplateEngine());
 
-        MongoCursor<Document> cursor = data.find({ key : {"$eq", key} });
-        String content = "not found";
-        if (cursor.hasNext()) {
-            Document doc = cursor.next();
-            content = alarm.toClass(doc.get("content")).toString();
-        }
+        Document doc = data.find(eq("key", key)).first();
+        String content = (doc == null) ? "not found" : alarm.toClass(doc.get("content")).toString();
         // send to the web page
         post("/joinresult", (request, response) -> content);
 	}
