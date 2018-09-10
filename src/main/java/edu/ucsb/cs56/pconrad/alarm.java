@@ -19,7 +19,7 @@ class alarm{
 		if (!(o instanceof alarm))
             return false;
         alarm a = (alarm) o;
-        return time == o.time && purpose == o.purpose;
+        return time == a.time && purpose == a.purpose;
     }
 
     @Override
