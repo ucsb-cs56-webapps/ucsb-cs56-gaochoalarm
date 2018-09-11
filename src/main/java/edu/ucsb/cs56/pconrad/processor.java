@@ -1,6 +1,6 @@
-package edu.ucsb.cs56.pconrad;
-
-import static spark.Spark.port;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -15,31 +15,28 @@ import com.mongodb.client.result.DeleteResult;
 import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
 
-import org.apache.log4j.Logger;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import spark.ModelAndView;
-import spark.template.mustache.MustacheTemplateEngine;
+import alarm;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.port;
 
-public class SparkMustacheDemo02 {
+class processor{
 
-	public static final String CLASSNAME = new Object() {}.getClass().getEnclosingClass().getName();;
+	public static final String CLASSNAME="processor";
 	
-	public static final Logger log = Logger.getLogger(CLASSNAME);
-
-	public static void main(String[] args) {
-
+    public static final Logger log = Logger.getLogger(CLASSNAME);
+    
+    public static void main(String[] args){
         port(getHerokuAssignedPort());
-        
         get("/", (rq, rs) -> new ModelAndView(new HashMap(), "home.mustache"), new MustacheTemplateEngine());
+        createAnAlarm();
+        findAnAlarm();
+    }
 
+    public void createAnAlarm(){
         // Get time and purpose to generate key and json
-        int createKey;
+        int key;
         String json;
         get("/create", (request, response) -> {
             String time = request.queryParams("time");
@@ -48,40 +45,46 @@ public class SparkMustacheDemo02 {
             map.put("time", time);
             map.put("purpose", purpose);
             alarm a = new alarm(time, purpose);
-            createKey = a.hashCode();
+            key = a.hashCode();
             json = a.toJson();
             return new ModelAndView(map, "createresult.mustache");
         }, new MustacheTemplateEngine());
         // send to the web page 
-        post("/createresult", (request, response) -> createKey.toString());
-		
+        post("/createresult", (rq, rs) -> key);
+
         // Post to database
         String dbUser = System.getenv().get("MONGODB_USER");
         String dbPassword = System.getenv().get("MONGODB_PASS");
-        String dbName = System.getenv().get("MONGODB__NAME");
+        String dbName  = System.getenv().get("MONGODB__NAME");
         String hostName = System.getenv().get("MONGODB_HOST");
-        String request = "mongodb://" + dbUser + ":" + dbPassword + "@" + hostName + "/" + dbName;
+        String request   = "mongodb://" + dbUser + ":" + dbPassword + "@" + hostName + "/" + dbName;
         MongoClientURI uri  = new MongoClientURI(request); 
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
         MongoCollection<Document> data = db.getCollection("data");
-		data.insertOne(new Document("key", createKey)
+		data.insertOne(new Document("key", key)
                             .append("content", json));
+    }
 
+    public void findAnAlarm(){
         int key;
-        get("/join", (request, response) -> {
-            key = Integer.parseInt(request.queryParams("key"));
+        get("/join", (request, response)->{
+            key = request.queryParams("key");
             Map map = new HashMap();
-            map.put("key", key);
+            map.put("key", key)
             return new ModelAndView(map, "joinresult.mustache");
         }, new MustacheTemplateEngine());
 
-        Document doc = data.find(eq("key", key)).first();
-        String content = (doc.isEmpty()) ? "not found" : alarm.toClass(doc.get("content").toString()).toString();
+        MongoCursor<Document> cursor = data.find({ key : {"$eq", key} });
+        String content = "not found";
+        if (cursor.hasNext()) {
+            Document doc = cursor.next();
+            content = alarm.toClass(doc.get("content")).toString();
+        }
         // send to the web page
         post("/joinresult", (request, response) -> content);
-	}
-	
+    }
+
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
@@ -89,5 +92,4 @@ public class SparkMustacheDemo02 {
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
-	
 }
