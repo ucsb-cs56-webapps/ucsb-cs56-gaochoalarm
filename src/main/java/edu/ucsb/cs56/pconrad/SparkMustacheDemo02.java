@@ -143,7 +143,15 @@ public class SparkMustacheDemo02 {
 		data.insertOne(new Document("key", key)
                             .append("content", json));
 
-    }
+	}
+	
+	public static alarm fetchFromDB(String uriString){
+		MongoClientURI uri  = new MongoClientURI(uriString); 
+        MongoClient client = new MongoClient(uri);
+        MongoDatabase db = client.getDatabase(uri.getDatabase());
+        MongoCollection<Document> data = db.getCollection("data");
+
+	}
 
 	
 }

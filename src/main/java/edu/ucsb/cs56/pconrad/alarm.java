@@ -1,5 +1,6 @@
 package edu.ucsb.cs56.pconrad;
 import com.google.gson.Gson;
+import java.lang.Math;
 
 
 class alarm{
@@ -42,7 +43,7 @@ class alarm{
 
     @Override
     public int hashCode() {
-        return toString().hashCode();
+        return Math.abs(toString().hashCode());
     }
 
     public String toJson(){
