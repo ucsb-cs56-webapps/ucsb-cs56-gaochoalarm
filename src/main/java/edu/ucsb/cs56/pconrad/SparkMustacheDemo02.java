@@ -77,7 +77,7 @@ public class SparkMustacheDemo02 {
         }, new MustacheTemplateEngine());
 
         Document doc = data.find(eq("key", key)).first();
-        String content = (doc == null) ? "not found" : alarm.toClass(doc.get("content")).toString();
+        String content = (doc.isEmpty()) ? "not found" : alarm.toClass(doc.get("content").toString()).toString();
         // send to the web page
         post("/joinresult", (request, response) -> content);
 	}
