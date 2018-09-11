@@ -77,15 +77,15 @@ public class SparkMustacheDemo02 {
 			int key = Integer.parseInt(rq.queryParams("key"));
 			alarm newAlarm = fetchFromDB(key, uriString);
 			Map map3 = new HashMap();
-			if (newAlarm.getPurpose().isEmpty()){
-				map3.put("Massage", "It seems like the Alarm you want to join does not exist");
-			}else{
+			// if (newAlarm.getPurpose().isEmpty()){
+			// 	map3.put("Massage", "It seems like the Alarm you want to join does not exist");
+			// }else{
 				map3.put("Massage","You joined an GauchoAlarm successfully!");
 				map3.put("date", newAlarm.getDate());
 				map3.put("time", newAlarm.getTime());
 				map3.put("purpose", newAlarm.getPurpose());
 				map3.put("key", key);
-			}
+			//}
 			return new ModelAndView(map3, "joinresult.mustache");
 		}, new MustacheTemplateEngine());
 	}
