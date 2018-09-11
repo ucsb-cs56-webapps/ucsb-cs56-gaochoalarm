@@ -75,12 +75,18 @@ public class SparkMustacheDemo02 {
         }, new MustacheTemplateEngine());
 		get("/joinresult", (rq, rs) -> {
 			int key = Integer.parseInt(rq.queryParams("key"));
-
-			
-			
-			
-			
-			return new ModelAndView(map, "joinresult.mustache");
+			alarm newAlarm = fetchFromDB(key, uriString);
+			Map map3 = new HashMap();
+			if (newAlarm.getPurpose().isEmpty()){
+				map3.put("Massage", "It seems like the Alarm you want to join does not exist");
+			}else{
+				map3.put("Massage","You joined an GauchoAlarm successfully!");
+				map3.put("date", newAlarm.getDate());
+				map3.put("time", newAlarm.getTime());
+				map3.put("purpose", newAlarm.getPurpose());
+				map3.put("key", key);
+			}
+			return new ModelAndView(map3, "joinresult.mustache");
 		}, new MustacheTemplateEngine());
 	}
 	
@@ -145,14 +151,17 @@ public class SparkMustacheDemo02 {
 
 	}
 	
-	public static alarm fetchFromDB(String uriString){
+	public static alarm fetchFromDB(int key, String uriString){
 		MongoClientURI uri  = new MongoClientURI(uriString); 
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
 		MongoCollection<Document> data = db.getCollection("data");
-		
-		alarm newAlarm = new alarm("2012-11-02","02:02","dinner");
 
+		Document doc = data.find(eq("key",key)).first();
+		alarm newAlarm = new alarm();
+		if (!doc.isEmpty()){
+			newAlarm = alarm.toClass(doc.get("content").toString());
+		}
 		return newAlarm;
 
 	}

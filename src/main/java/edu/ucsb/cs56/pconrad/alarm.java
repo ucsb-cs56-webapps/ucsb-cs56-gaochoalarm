@@ -2,11 +2,19 @@ package edu.ucsb.cs56.pconrad;
 import com.google.gson.Gson;
 import java.lang.Math;
 
+import javax.swing.text.html.HTMLDocument.BlockElement;
+
 
 class alarm{
     private String time;
     private String date;
     private String purpose;
+
+    public alarm(){
+        this.time = "";
+        this.purpose = "";
+        this.date = "";
+    }
 
     public alarm(String date, String time, String purpose){
         this.time = time;
