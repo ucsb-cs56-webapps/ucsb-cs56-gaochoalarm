@@ -149,7 +149,11 @@ public class SparkMustacheDemo02 {
 		MongoClientURI uri  = new MongoClientURI(uriString); 
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
-        MongoCollection<Document> data = db.getCollection("data");
+		MongoCollection<Document> data = db.getCollection("data");
+		
+		alarm newAlarm = new alarm("2012-11-02","02:02","dinner");
+
+		return newAlarm;
 
 	}
 
