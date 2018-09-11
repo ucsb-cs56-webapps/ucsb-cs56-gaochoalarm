@@ -53,18 +53,18 @@ class processor{
                             .append("content", json));
     }
 
-    public void findAnAlarm(){
-        int key;
-        get("/join", (request, response)->{
-            key = request.queryParams("key");
-            Map map = new HashMap();
-            map.put("key", key);
-            return new ModelAndView(map, "joinresult.mustache");
-        }, new MustacheTemplateEngine());
+    // public void findAnAlarm(){
+    //     int key;
+    //     get("/join", (request, response)->{
+    //         key = request.queryParams("key");
+    //         Map map = new HashMap();
+    //         map.put("key", key);
+    //         return new ModelAndView(map, "joinresult.mustache");
+    //     }, new MustacheTemplateEngine());
 
-        Document doc = data.find({ key: {"$eq": key}}).first();
-        String content = (doc == null) ? "not found" : alarm.toClass(doc.get("content")).toString();
-        // send to the web page
-        post("/joinresult", (request, response) -> content);
-    }
+    //     Document doc = data.find({ key: {"$eq": key}}).first();
+    //     String content = (doc == null) ? "not found" : alarm.toClass(doc.get("content")).toString();
+    //     // send to the web page
+    //     post("/joinresult", (request, response) -> content);
+    // }
 }

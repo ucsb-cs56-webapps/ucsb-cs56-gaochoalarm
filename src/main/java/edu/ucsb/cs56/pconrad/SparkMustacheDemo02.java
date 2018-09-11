@@ -80,7 +80,7 @@ public class SparkMustacheDemo02 {
 			
 			
 			
-			return new ModelAndView(map3, "joinresult.mustache");
+			return new ModelAndView(map, "joinresult.mustache");
 		}, new MustacheTemplateEngine());
 	}
 	
