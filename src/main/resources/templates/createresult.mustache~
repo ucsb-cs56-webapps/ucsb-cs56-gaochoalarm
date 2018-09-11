@@ -11,8 +11,8 @@
      Good luck.
  </p>
 
-<input type="text" value={{key}} id="myInput">
-<button onclick="myFunction()">Copy Key</button>
+<input type="text" value="Hello World" id="myInput">
+<button onclick="myFunction()">Copy text</button>
 
 <script>
 function myFunction() {
