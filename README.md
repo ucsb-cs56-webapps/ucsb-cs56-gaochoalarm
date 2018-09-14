@@ -16,20 +16,33 @@ If you have a code from someone who has made an alarm then click on "Join An Ala
 Then, input the unique key will be given to you. ( i.e. 8914223145) 
 
 # How to Run Source Code: Set up Database through MongoDB
-# 1. Creating environment variables locally
+# 1. Set up MLab Account
+
+- Create a free mLab account at [mLab.com](https://mlab.com)
+- Create a new deployment with any hosting service
+- Click on your new deployment
+- Go the users tab and make a new user
+- Take note of the user credentials your just made, your db name, and host
+
+```
+mongodb://<dbuser>:<dbpassword>@d<dbhost>/<dbname>
+```
+
+# 2. Creating environment variables locally
 Since we're going to be logging into a remote database, we have to hide our login credentials from the outside world. To do this, we're going to make a ```.env``` file inside our project directory. It should have a structure similar to this.
 ```
-USER_=<your user's username>
-PASS_=<your user's password>
-DB_NAME_=<your db name>
-HOST_=<your host name> // should be something with mlab in it...
+export MONGODB_USER= <your user here> (for example: JohnKennedy)
+export MONGODB_PASS=<your pass here> (for example: 1243541f)
+export MONGODB_NAME=<your database name here> (for example: alarm)
+export MONGODB_HOST=<your host here> (for example: ds027583.mlab.com)
+export MONGODB_PORT=<your port here> (for example: 27583)
 ```
 __!!! IMPORTANT !!!__
 Make sure to run the following to add ```.env``` to your .gitignore! This way our secret credentials won't be pushed into our GitHub repos.
 ```
 echo ".env" >> .gitignore
 ```
-# 2. Additions to pom.xml
+# 3. Additions to pom.xml
 If you forked the project, you must add the following lines to your pom.xml inside the ```<dependencies>``` tag.
 ```XML
 <!-- MongoDB NoSQL Database -->
