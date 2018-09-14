@@ -15,7 +15,15 @@ If you have a code from someone who has made an alarm then click on "Join Alarm"
 Then, input the unique key given to you. ( i.e. 8914223145) 
 
 # How to Run Source Code: Set up Database through MongoDB
-# 1. Creating environment variables locally
+# 1. MLab Account
+
+    Create a free mLab account at mLab.com
+    Create a new deployment with any hosting service
+    Click on your new deployment
+    Go the users tab and make a new user
+    Take note of the user credentials your just made, your db name, and host
+
+# 2. Creating environment variables locally
 Since we're going to be logging into a remote database, we have to hide our login credentials from the outside world. To do this, we're going to make a ```.env``` file inside our project directory. It should have a structure similar to this.
 ```
 USER_=<your user's username>
@@ -28,7 +36,7 @@ Make sure to run the following to add ```.env``` to your .gitignore! This way ou
 ```
 echo ".env" >> .gitignore
 ```
-# 2. Additions to pom.xml
+# 3. Additions to pom.xml
 If you forked the project, you must add the following lines to your pom.xml inside the ```<dependencies>``` tag.
 ```XML
 <!-- MongoDB NoSQL Database -->
