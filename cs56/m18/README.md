@@ -17,4 +17,5 @@ More to implement:
 - Phone Alarm: set the alarm in "clock" application on the phone
 
 Advice on working with the code:
-- w3schools.com  is a good tool for writing html
+- www.w3schools.com  is a good tool for writing html
+- github.com/spullara/mustache.java  
