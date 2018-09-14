@@ -24,7 +24,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <userDefinedMainClass>edu.ucsb.cs56.pconrad.SparkMustacheDemo02</userDefinedMainClass>
-    <userDefinedHerokuApp>TBD</userDefinedHerokuApp>
+    <userDefinedHerokuApp>cs56-m18-gauchoalarm</userDefinedHerokuApp>
   </properties>
 
   <!-- what other software does our project depend on (third-party JARs, etc.) -->
@@ -171,7 +171,7 @@
           <processTypes>
             <!-- Tell Heroku how to launch your application -->
             <!-- You might have to remove the ./ in front   -->
-            <web>java $JAVA_OPTS -jar target/${project.name}-${project.version}-jar-with-dependencies.jar</web>
+            <web>java $JAVA_OPTS -jar target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</web>
 
           </processTypes>
 	</configuration>

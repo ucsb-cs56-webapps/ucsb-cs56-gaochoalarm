@@ -1,4 +1,5 @@
 # ucsb-cs56-gauchoalarm
+https://cs56-m18-gauchoalarm.herokuapp.com/
 An App that shares schedule notifications with friends
 
 The homepage of the webapp contains the introduction of GauchoAlarm, and the instruction of how to use our webapp.
@@ -58,8 +59,9 @@ If you forked the project, you must add the following lines to your pom.xml insi
 | copy the website to `/docs` for publishing via github-pages | Type `mvn site-deploy` then look for javadoc in `docs/apidocs/index.html` |	
 | make a jar file | Type `mvn package` and look in `target/*.jar` |
 
-| run the main in the jar file | Type `java -jar target/sparkjava-demo-01-1.0-jar-with-dependencies.jar ` |
+| run the main in the jar file | Type `java -jar target/spark-mustache-demo-02-1.0-jar-with-dependencies.jar ` |
 | change which main gets run by the jar | Edit the `<mainClass>` element in `pom.xml` |
+| deploy the project on Heroku | Type `mvn package heroku:deploy` |
 
 # Future expectation
 - login/logout via social application (i.e. Facebook, Google, GitHub...)
