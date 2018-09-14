@@ -13,8 +13,8 @@ Yingchao, Kevin, Zheren, Seaky, Shiheng, Zhiqin
 See the README.md under ucsb-cs56-gauchoalarm and ISSUES
 
 More to implement:
-Map: show the location of meeting
-Phone Alarm: set the alarm in "clock" application on the phone
+- Map: show the location of meeting
+- Phone Alarm: set the alarm in "clock" application on the phone
 
 Advice on working with the code:
-w3schools.com  is a good tool for writing html
+- w3schools.com  is a good tool for writing html
