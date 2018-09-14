@@ -16,13 +16,17 @@ If you have a code from someone who has made an alarm then click on "Join Alarm"
 Then, input the unique key given to you. ( i.e. 8914223145) 
 
 # How to Run Source Code: Set up Database through MongoDB
-# 1. MLab Account
+# 1. Set up MLab Account
 
-    Create a free mLab account at mLab.com
-    Create a new deployment with any hosting service
-    Click on your new deployment
-    Go the users tab and make a new user
-    Take note of the user credentials your just made, your db name, and host
+- Create a free mLab account at [mLab.com](https://mlab.com)
+- Create a new deployment with any hosting service
+- Click on your new deployment
+- Go the users tab and make a new user
+- Take note of the user credentials your just made, your db name, and host
+
+```
+mongodb://<dbuser>:<dbpassword>@d<dbhost>/<dbname>
+```
 
 # 2. Creating environment variables locally
 Since we're going to be logging into a remote database, we have to hide our login credentials from the outside world. To do this, we're going to make a ```.env``` file inside our project directory. It should have a structure similar to this.
